@@ -1,0 +1,186 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " " )
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+
+int main()
+{
+	//init test containers
+	std::vector<std::string> a = { "zero","one","two","three","four","five","six","seven","eight","nine","ten" };
+	std::vector<std::string> b = { "0","1","2","3","4","5","6","7","8","9","10" };
+	std::string c = "Happy Fun times with Capital letters";
+	std::string d = "otHErwiSe KNOwn as upper CASE biotches";
+
+	//write initial states
+	write_to_count(a);
+	std::cout << std::endl;
+	write_to_count(b);
+	std::cout << std::endl << std::endl;
+	
+	//test algorithm
+
+	//Case - 01
+
+	/*
+	std::copy(a.begin() + 1 , a.begin() + 4,      
+		b.begin() + 6);			
+	
+
+	// copy from 1 to 4th index i.e a.being() to "b" destination
+	Output
+	zero one two three four five six seven eight nine ten
+	0 1 2 3 4 5 6 7 8 9 10
+
+	0 1 2 3 4 5 one two three 9 10
+	*/
+
+
+
+
+   //Case - 02
+
+	/*
+   std::copy(b.begin() , b.begin() + 4,         
+   	b.begin() + 6);	
+
+    source and destination in same container
+	zero one two three four five six seven eight nine ten
+	0 1 2 3 4 5 6 7 8 9 10
+
+	0 1 2 3 4 5 "0 1 2 3" 10
+	*/
+
+
+	//Case - 03
+
+	/*
+	std::copy(b.begin(), b.begin() + 4,     
+		b.begin() + 3);
+
+
+    source and destination in same container,if destination is inside,"3"is inbetween
+	//OutPut
+	zero one two three four five six seven eight nine ten
+	0 1 2 3 4 5 6 7 8 9 10
+
+	"0 1 2" ,"0 1 2","0", 7 8 9 10
+   */
+
+
+
+	//Case - 04
+
+	/*
+	std::copy_n(b.begin(), 4, b.begin() + 5);  
+	
+	// copies number of elements to a new location: 4 elements to 5th index
+	/* Output:
+	zero one two three four five six seven eight nine ten
+	0 1 2 3 4 5 6 7 8 9 10
+
+	0 1 2 3 4 "0 1 2 3" 9 10
+	*/
+
+
+
+	// Case - 05 - iterator Adaptor
+
+	/*
+	//std::copy_n(std::istream_iterator<std::string>(std::cin), 5,  // get 5 input and jam them into container
+	//	b.begin());
+
+	//Output
+	zero one two three four five six seven eight nine ten
+	0 1 2 3 4 5 6 7 8 9 10
+
+	r a v i k i r a n
+	r a v i k 5 6 7 8 9 10
+	*/
+
+	// Reverse copy : you dont triplicate, NO overlapping,if its within range.
+	// you could do with copy_backward. or move_backward.
+	
+	
+	//Case -06 : copy_if
+	/*
+	write_to_count(c);
+	std::cout << std::endl;
+	write_to_count(d);
+	std::cout << std::endl << std::endl;
+
+	std::string uppers;
+	std::copy_if(c.begin(), c.end(), std::back_inserter(uppers), std::isupper); //ccype header for "isupper"
+	std::copy_if(d.begin(), d.end(), std::back_inserter(uppers), std::isupper);
+
+	write_to_count(uppers);
+
+	//Output
+	H a p p y   F u n   t i m e s   w i t h   C a p i t a l   l e t t e r s
+	o t H E r w i S e   K N O w n   a s   u p p e r   C A S E   b i o t c h e s
+
+	H F C H E S K N O C A S E
+	*/
+
+
+
+	//Case : 07 - MOVE 
+
+	/*
+	std::move(a.begin(), a.begin() + 3,
+		b.begin());
+
+	write_to_count(a, " | " );
+	std::cout << std::endl;
+	write_to_count(b);
+
+	//Output
+	zero one two three four five six seven eight nine ten
+	0 1 2 3 4 5 6 7 8 9 10
+
+	|  |  | three | four | five | six | seven | eight | nine | ten |
+	zero one two 3 4 5 6 7 8 9 10
+	*/
+
+
+	// Case - 08 : No move_if or No move_n, use  "Copy_If"
+
+´   /*
+	//Only move if it is length greater than 3,for example:one,ten,two etc
+
+	std::copy_if(
+		std::make_move_iterator( a.begin() ),
+		std::make_move_iterator( a.end() ), 
+		b.begin(),
+		[](const std::string& str) {return str.size() > 3; } // Predicate : Bool check
+	);
+
+	write_to_count(a, " | ");
+	std::cout << std::endl;
+	write_to_count(b);
+	// Output
+	/*
+	zero one two three four five six seven eight nine ten
+	0 1 2 3 4 5 6 7 8 9 10
+
+	| one | two |  |  |  | six |  |  |  | ten |
+	zero three four five seven eight nine 7 8 9 10
+	*/
+
+	//write result
+	write_to_count(b);
+
+	while (!_kbhit());
+	return 0;
+}
