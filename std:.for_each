@@ -1,0 +1,45 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " ")
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+int main()
+{
+	std::vector<int> r = { 6,9,8,3,4,2,1,9,7,6,5,0,1,8 };
+
+	write_to_count(r);
+	std::cout << std::endl;
+
+	// only first 5 elements are doubled
+	std::for_each(r.begin(), r.begin() + 5,
+		[]( int& v)
+		{
+		  v *= 2;
+		}
+	);
+
+	std::cout << std::endl;
+	//write results
+	write_to_count(r);
+	std::cout << std::endl;
+
+
+	while (!_kbhit());
+	return 0;
+}
+
+
+// output
+6 9 8 3 4 2 1 9 7 6 5 0 1 8
+"12 - 18 - 16 - 6 - 8" - 2 - 1 - 9 - 7 - 6 - 5 - 0 - 1 - 8  -> only applied for first 5 elements
