@@ -1,0 +1,139 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " ")
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+
+int main()
+{
+	//init test containers
+	std::vector<std::string> a = { "zero","one","two","three","four","five","six","seven","eight","nine","ten" };
+	std::vector<std::string> b = { "0","1","2","3","4","5","6","7","8","9","10" };
+	std::vector<std::string> c = { "0","1","6","4","4","4","6","7","7","9","9" };
+	
+	//write initial states
+	write_to_count(a);
+	std::cout << std::endl;
+	//write_to_count(b);
+	write_to_count(c);
+	std::cout << std::endl << std::endl;
+
+	/*
+	// test algorithms : remove_if
+	const auto new_end = std::remove_if( a.begin(), a.end() ,
+		[](const std::string& s)
+		{
+		return std::count(s.begin(), s.end(), 't') == 0;
+		}
+	);
+	a.erase(new_end, a.end());
+	
+	*/
+
+	//testing - unique - only remove which are consecutive.
+	const auto new_end = std::unique(c.begin(), c.end());
+	c.erase( new_end, c.end());
+
+	//write results
+	write_to_count(a, " | ");
+	std::cout << std::endl;
+	//write_to_count(b);
+	write_to_count(c);
+
+
+	while (!_kbhit());
+	return 0;
+}
+
+/*
+// Output : remove if
+zero one two three four five six seven eight nine ten
+0 1 2 3 4 5 6 7 8 9 10
+
+two | three | eight | ten |   ---> removed all which has "t" in it.
+0 1 2 3 4 5 6 7 8 9 10
+
+// remove_copy and remove_copy_if same as copy but reverse order.
+
+// output : unique
+zero one two three four five six seven eight nine ten
+0 1 6 4 4 4 6 7 7 9 9
+
+zero | one | two | three | four | five | six | seven | eight | nine | ten |
+0 1 6 4 6 7 9
+*/
+
+-------------------------------------------------------------------------------------------------
+writing our own template class :
+
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " ")
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+// we write our own template
+template<class Container, class Pred>
+void ravi_remove( Container& cont, Pred pred)
+{
+	const auto new_end = std::remove_if(cont.begin(), cont.end(), pred);
+	cont.erase(new_end, cont.end() );
+}
+
+int main()
+{
+	//init test containers
+	std::vector<std::string> a = { "zero","one","two","three","four","five","six","seven","eight","nine","ten" };
+	std::vector<std::string> b = { "0","1","2","3","4","5","6","7","8","9","10" };
+
+	//write initial states
+	write_to_count(a);
+	std::cout << std::endl;
+	write_to_count(b);
+	std::cout << std::endl << std::endl;
+
+	ravi_remove ( a, 
+		[](const std::string& s)
+		{
+			return std::count(s.begin(), s.end(), 't') == 0;
+		});
+
+	//write results
+	write_to_count(a, " | ");
+	std::cout << std::endl;
+	write_to_count(b);
+
+	while (!_kbhit());
+	return 0;
+}
+
+// output
+/*
+zero one two three four five six seven eight nine ten
+0 1 2 3 4 5 6 7 8 9 10
+
+two | three | eight | ten |
+0 1 2 3 4 5 6 7 8 9 10
+*/
+
