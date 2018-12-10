@@ -1,0 +1,60 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " ")
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+int main()
+{
+	std::vector<int> a = { 6,9,8,3,4,2,1,9,7,6,5,0,1,8,2,2 };
+
+	write_to_count(a);
+	std::cout << std::endl;
+
+	//test algoritms
+	// Count
+	std::cout << std::count(a.begin(), a.end(), 2);// count "2" in the list
+
+	std::cout << std::endl;
+
+	// Count_if
+	std::cout << std::count_if(a.begin(), a.end(),
+		[]( auto n) 
+		{
+			return n <= 3; 
+		}
+	);
+
+	std::cout << std::endl;
+
+	// all_of, any_of and none_if -> returns = true 
+	std::cout << std::boolalpha << std::any_of( a.begin(), a.end(),
+		[](auto n)
+		{
+			return n <= 3;
+		}
+	);
+
+	std::cout << std::endl;
+	// none_of returns true -> 
+	std::cout << std::boolalpha << std::none_of(a.begin(), a.end(),
+		[](auto n)
+		{
+			return n <= 63;
+		}
+	);
+ 
+	while (!_kbhit());
+	return 0;
+}
+
