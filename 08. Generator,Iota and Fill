@@ -1,0 +1,84 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+#include<numeric>
+#include <math.h>
+#include <random>
+#include <functional>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " ")
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+int main()
+{
+
+	std::vector<std::string> a = { "zero","one","two","three","four","five","six","seven","eight","nine","ten" };
+	std::vector<std::string> b = { "0","1","2","3","4","5","6","7","8","9","10" };
+
+	// Generate : Assigns the results of successive funtion calls to every elements in a range.
+	// Random number generator.
+	std::mt19937 rng(std::random_device{}());
+	std::uniform_int_distribution<int> d(0, 20);
+	std::vector<int> g;
+	//std::generate_n(std::back_inserter(g), 5, [&]() {return d(rng); });
+	// OR
+	std::generate_n(std::back_inserter(g), 5, std::bind(d,rng));
+	std::cout << "Generator  - "<< std::endl;
+	write_to_count(g, " : ");
+	std::cout << std::endl;
+
+	//iota : sequentially increasing values
+	std::vector<int> n(10);
+	std::iota(n.begin(), n.end(), 0);// from 0 to 9
+	std::cout << "Iota - " << std::endl;
+	write_to_count(n, " : ");
+	std::cout << std::endl;
+
+	// if you want to increase values by 3 or 6 successively , we will use 6
+	std::vector<int> i;
+	std::generate_n(std::back_inserter(i), 15, [val = 0]() mutable // 15 values, 6 successive difference
+	{
+		const auto old = val;
+		val += 6;
+		return old;
+	}
+	);
+	write_to_count(i, " - ");
+	std::cout << std::endl;
+
+	//Fill
+	std::vector<int> v(15, 69);// 5 times 69
+	v.reserve(2); // can reserve places to fill
+	//std::fill_n(std::back_inserter(v), 1, 420); // adds 420 at end
+	std::fill(v.begin() + 2, v.begin() + 5, 640); 
+	std::cout << "Fill  -  " << std::endl;
+	write_to_count(v, " : "); 
+
+	//Sample :didnt worked
+	/*
+	//sample : gives out the random sample inside a set 
+	std::vector<std::string> s;
+	std::sample(a.begin(), a.end(), std::back_inserter(s),5, rng );
+	write_to_count(a, " : ");
+
+	
+	std::string in = "abcdefgh", out;
+	std::sample(in.begin(), in.end(), std::back_inserter(out),
+		5, std::mt19937{ std::random_device{}() });
+	std::cout << "five random letters out of " << in << " : " << out << '\n';
+	// Output : five random letters out of abcdefgh : adfgh
+	*/
+	
+	while (!_kbhit());
+	return 0;
+}
+
