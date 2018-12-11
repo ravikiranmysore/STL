@@ -1,0 +1,53 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " ")
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+auto ravi_split(const std::string& string, const std::string& delimiters)
+{
+	std::vector<std::string> split;
+	const auto FindNext = [&](const auto i)
+	{
+		return std::find_first_of(i, string.end(), delimiters.begin(), delimiters.end());
+	};
+
+	for (std::string::const_iterator i, i_prev = string.begin(); ; i_prev = i + 1)
+	{
+		i = FindNext(i_prev);
+		split.emplace_back(i_prev, i);
+		if (i == string.end())
+		{
+			break;
+		}
+	}
+	return split;
+}
+
+int main()
+{
+
+	// SEARCH
+	const std::string s = "one;two,three:four";
+	const std::string delimit = ";,:*"; // ":?*" or " any delimited to search for.(punctuations)
+
+	//test algo
+	const auto split = ravi_split(s, delimit);
+
+	std::cout << s << std::endl;
+	write_to_count(split, " | "); // splitted
+
+	while (!_kbhit());
+	return 0;
+}
+
