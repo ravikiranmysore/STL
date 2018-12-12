@@ -1,0 +1,78 @@
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<string>
+#include<iterator>
+#include <conio.h>
+#include<cctype>
+#include<numeric>
+#include <math.h>
+#include <random>
+#include <functional>
+using namespace std;
+
+template<class Container>
+void write_to_count(const Container& container, const char* delimiter = " ")
+{
+	std::copy(container.begin(), container.end(),
+		std::ostream_iterator<Container::value_type>(std::cout, delimiter));
+}
+
+int main()
+{
+	//init test containers
+	std::vector<std::string> a = { "zero","one","two","three","four","five","six","seven","eight","nine","ten" };
+	std::vector<std::string> b = { "0","1","2","3","4","5","6","7","8","9","10","11","12" };
+	std::vector<int> c = { 0,1,2,3,4,5,6,7,8,9,10 };
+
+	/* 
+	next_permutation,prev_permutation and is_permutation
+		std::string s = "abcd";
+	std::cout << s << std::endl;
+	while (std::next_permutation(s.begin(), s.end())) // prev_permutation -> dbca,is_permutation to check lexical order
+	{
+		std::cout << s << std::endl;
+	}
+	*/
+	write_to_count(a);
+	std::cout << std::endl;
+	write_to_count(c);
+	std::cout << std::endl << std::endl;
+
+	//partition -> splits container into two separate outputs
+	auto pp1 = std::partition(a.begin(), a.end(),  // sample_partition -> gives you sequenced partition order
+		[](const auto &s)
+		{
+			return std::any_of(s.begin(),s.end(), 
+				[](char d)
+				{
+					return d == 'e'; 
+			    }
+			   );
+	    }
+        );
+
+	auto pp2 = std::partition(c.begin(), c.end(), 
+		[](int i)
+		{
+			return i % 2 == 0;
+		}
+		);
+
+	cout << "with 'e' : ";
+	write_to_count(a);
+	std::cout << std::endl;
+	cout << "beginning of 2nd parition : " << *pp1 << std::endl << std::endl;
+
+	cout << "with all even numbers : ";
+	write_to_count(c);
+	std::cout << std::endl;
+	cout << "beginning of 2nd parition : " <<  *pp2 << std::endl;
+
+
+	// partition copy -> it will divide into 2 parts, one with part true and false.
+	
+	while (!_kbhit());
+	return 0;
+}
+
