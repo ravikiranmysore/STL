@@ -1,0 +1,112 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+bool f(int x, int y)
+{
+    return x > y;
+}
+#define every(iter, iterable) auto iter = iterable.begin(); iter != iterable.end(); iter++
+
+void VectorDemo()
+{
+    cout << "C++ STL : " << endl;
+    // vectors are dynamically arrays .
+    
+    vector<int> A = { 11,2,3,14};
+    
+    cout << "\nAll the elements of vector : "<< endl;
+    // for (auto i = A.begin(); i != A.end(); ++i)
+    for(every(i, A))
+    {
+        cout << *i << "\t  ";
+    }
+    
+    cout<< endl;
+    
+    cout << "\nElement at position 1 is : "<<A[1] << endl;
+    cout << "\nSORTING : " << endl;
+    sort(A.begin(), A.end());
+    //    for (auto i = A.begin(); i != A.end(); ++i)
+    //        cout << *i << "\t ";
+    for(every(i, A))
+    {
+        cout << *i << "\t  ";
+    }
+    cout<< endl;
+    
+    cout << "\nBinary search : " << endl;
+    bool present = binary_search(A.begin(),A.end(), 3);
+    cout << "If values 3 present ? : "<<std::boolalpha<<present << endl;
+    present = binary_search(A.begin(),A.end(), 4);
+    cout << "If values 4 present ? : "<<std::boolalpha<<present << endl;
+    
+    A.push_back(100);
+    present = binary_search(A.begin(),A.end(), 100);
+    cout <<"If values 100 present,after pushback ? : " << std::boolalpha<<present << endl;
+    
+    A.push_back(100);
+    A.push_back(100);
+    A.push_back(10);
+    A.push_back(100);
+    A.push_back(123);
+    cout << "\nAdding elements to vector : " << endl;
+    //    for(auto i = A.begin(); i != A.end();++i)
+    //        cout<< *i << " ";
+    for(every(i, A))
+    {
+        cout << *i << "\t  ";
+    }
+    cout << endl;
+    
+    cout << "\nIterator arthematic : " << endl;
+    vector<int>::iterator it = lower_bound(A.begin(),A.end(),10); // ">=" --> lower bound to 10
+    //lower_bound returns an iterator pointing to the first element in the range [first,last) which has a value not less than ‘val’.
+    auto it2 = upper_bound(A.begin(),A.end(),100); // ">" --> checks only if its greater
+    //upper_bound returns an iterator pointing to the first element in the range [first,last) which has a value greater than ‘val’.
+    cout << "Lower bound element : "<< *it <<"\t "<< " Upper bound element : " << *it2 << endl;
+    cout << "Diff of elements : "<<it2-it << endl;
+    
+    sort(A.begin(),A.end(),f);
+    vector<int>::iterator it3;
+    
+    cout << "\nSorted vector (greater to lesser): \n";
+    //    for(it3 = A.begin(); it3 != A.end(); it3++)
+    //    {
+    //        cout << *it3 << " ";
+    //    }
+    for(every(it3, A))
+    {
+        cout << *it3 << "\t  ";
+    }
+    cout << endl;
+    
+    cout << "\nOutput of rbegin and rend(without sort algo : \n";
+    for (auto ir = A.rbegin(); ir != A.rend(); ++ir)
+        cout << *ir << " ";
+    cout << endl;
+    
+    cout << "\nWithout ref,foreach - instead of being, end : "<<endl;
+    for(int x: A) // if you dont use '&'
+    {
+        cout << x << " ";
+    }
+    cout << endl;
+    
+    cout << "\nWith ref -  increment: "<<endl;
+    for(int &x: A) // if you use '&', it will iterate by ref
+    {
+        x++;
+        cout <<x << " ";
+    }
+    cout << "\n"<< endl;
+}
+
+int main()
+{
+    VectorDemo();
+    
+    return 0;
+}
