@@ -1,0 +1,173 @@
+#include <iostream>
+#include <vector>
+#include <set>
+#include <map>
+#include <algorithm>
+
+using namespace std;
+
+#define every(iter, iterable) auto iter = iterable.begin(); iter != iterable.end(); iter++
+
+void SetDemo()
+{
+    cout << " THIS IS SORTING DEMO "<< endl;
+    set<int> S;
+    S.insert(1);
+    S.insert(2);
+    S.insert(10);
+    S.insert(-1);
+    S.insert(-10);
+    cout << "Aescending order(it will sort itself internally) : "<< endl;
+    for(int x: S)
+    {
+        cout << x << " ";
+    }
+    cout << endl;
+
+    auto it = S.find(-10);
+    if(it == S.end())
+        cout << "Not present \n"<< endl;
+    else
+        cout << "Present at : " << *it << endl;
+    auto it2 =S.lower_bound(2);
+    auto it3 =S.upper_bound(2);
+    cout << "Lower bound : "  << *it2 << " "<<", Upper bound : "  << *it3 << endl;
+
+    auto it4 = S.upper_bound(10);
+    if(it4 == S.end())
+    {
+        cout << "Cant find upper bound of highest value in the set !!"<< endl;
+    }
+
+}
+void mapDemo()
+{
+    cout << "\n'MAP DEMO' \nMap something to something(int to string) : " << endl;
+    map<int,int> A;
+    A[1] = 100;
+    A[2] = -1;
+    A[3] = 200;
+    A[600] = 1;
+    A[150] = 98;
+    A[9] = 30;
+    A[-1] = 53;
+
+    // OR :
+    //    A.insert(pair<int, int>(1, 40));
+    //    A.insert(pair<int, int>(2, 30));
+    //    A.insert(pair<int, int>(3, 60));
+    //    A.insert(pair<int, int>(4, 20));
+    //    A.insert(pair<int, int>(5, 50));
+
+    map<int, int>::iterator it3;
+    for(every(it3, A))
+    {
+        cout << '\t' << it3->first << '\t' << it3->second << '\n';
+    }
+    cout<<endl;
+
+    map<char,int> count;
+    string x = "ravi kiran";
+
+    for(char c:x)
+    {
+        count[c]++;
+    }
+    cout << "Ravi Kiran \n"<< "No of 'a' : "<< count['a'] << " " <<"\nNo of 'i' : "<<  count['i']<< endl;
+
+    map<int, int> A2(A.begin(), A.end());
+
+    // print all elements of the map A2
+    cout << "\nThe map A2 after"
+         << " assign from A is : \n";
+    cout << "\tKEY\tELEMENT\n";
+    for (every(itr,A2)) {
+        cout << '\t' << itr->first
+             << '\t' << itr->second << '\n';
+    }
+    cout << endl;
+
+    // remove all elements up to
+    // element with key=3 in A2
+    cout << "\nA2 after removal of"
+            " elements less than key=3 : \n";
+    cout << "\tKEY\tELEMENT\n";
+    A2.erase(A2.begin(), A2.find(3));
+    for (every(itr, A2)) {
+        cout << '\t' << itr->first
+             << '\t' << itr->second << '\n';
+    }
+
+    // remove all elements with key = 4
+    int num;
+    cout << "\nValue at key 150 : "<< A2.find(150)->second << endl;
+    num = A2.erase(150);
+    cout <<"A2.erase(150) removed element index : "<< A2.find(150)->first<<endl ;
+    cout << "\tKEY\tELEMENT\n";
+    for (every(itr,A2)) {
+        cout << '\t' << itr->first
+             << '\t' << itr->second<< '\n';
+    }
+
+    cout << endl;
+
+    // lower bound and upper bound for map A key = 5
+    cout << "A.lower_bound(5) : "
+         << "\tKEY = ";
+    cout << A.lower_bound(5)->first << '\t';
+    cout << "\tELEMENT = "
+         << A.lower_bound(5)->second << endl;
+    cout << "A.upper_bound(5) : "
+         << "\tKEY = ";
+    cout << A.upper_bound(5)->first << '\t';
+    cout << "\tELEMENT = "
+         << A.upper_bound(5)->second << endl;
+
+}
+
+void pairDemo()
+{
+    cout << "'PAIRS' \n----------"<< endl;
+
+    pair <int, char> PAIR1 ;
+
+    PAIR1.first = 100;
+    PAIR1.second = 'G' ;
+
+    cout << PAIR1.first << " " ;
+    cout << PAIR1.second << "\n-------- "<< endl ;
+
+    set< pair<int, int> > S1;
+    S1.insert({401,450});
+    S1.insert({10,20});
+    S1.insert({2,3});
+    S1.insert({30,400});
+
+    int point = 400;
+
+    auto it=S1.upper_bound({point,INT_MAX}); // INT_MAX : Minimum and maximum values a `signed int' can hold
+    if(it==S1.begin())
+    {
+        cout << "Not present in upperbound"<< endl;
+        return;
+    }
+    it--;
+    pair<int,int> current = *it;
+    if(current.first <= point && point <= current.second)
+    {
+      cout << "\Present : "<< current.first << " " << current.second << endl;
+    }
+    else
+    {
+        cout << "Not Present in the set"<< endl;
+    }
+}
+
+int main()
+{
+    SetDemo();
+    mapDemo();
+    pairDemo();
+    
+    return 0;
+}
