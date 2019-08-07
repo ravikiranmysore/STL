@@ -1,0 +1,85 @@
+#include<bits/stdc++.h>
+#include<iomanip>
+using namespace  std;
+
+int main()
+{
+
+
+    // vector 2d
+    vector< vector<int> > v{ { 4,5, 3, 10 }, // initializing 2D vector with values.
+                             { 2, 7, 11 },
+                             { 3, 2, 1, 12 } };
+
+
+
+    cout << "\n Now for 2d vector without 'at': " <<endl;
+    for ( int n = 0; n < v.size(); ++n) {
+        for ( int m = 0; m < v[n].size(); ++m )
+        {
+            cout << v[n][m]<<"\t";
+        }
+        cout << endl;
+    }
+
+    vector<vector<int> > stuff;
+
+    for(int i = 0; i < 3; i++)
+    {
+        vector<int> temp;
+        for(int j =0; j < 3; j++)
+        {
+            temp.push_back(i);
+        }
+        stuff.push_back(temp);
+    }
+
+    cout << "\n New stuff : " <<endl;
+    for ( int n = 0; n < stuff.size(); n++) {
+        for ( int m = 0; m < stuff[n].size(); m++ )
+        {
+            cout << stuff[n][m]<<"\t";
+        }
+        cout << endl;
+    }
+
+    // Create a vector with 5 elements
+    vector<int> v2; //(5, 1);// here -> ** change 1 to 9 = v2(NoOfRow,_digitToChange)
+    v2.push_back(4);
+    v2.push_back(1);
+    v2.push_back(7);
+    v2.push_back(9);
+    v2.push_back(1);
+
+    // Create a vector of 3 elements.
+    vector<vector<int> > v2d2(7, v2);// here -> ** change (7 col, v2 = v2(NoOfCol,vector1)
+
+    // Print out the elements
+    cout << "Before Vector Update" << endl;
+    for (int i = 0; i < v2d2.size(); i++) {
+        for (int j = 0; j < v2d2[i].size(); j++)
+            cout << v2d2[i][j] << " ";
+        cout << endl;
+    }
+
+    cout << "" << endl;
+    cout << "Vector Update" << endl;
+    cout << "" << endl;
+
+    cout << "After Vector Update" << endl;
+    for (int i = 0; i < v2d2.size(); i++)
+    {
+        for (int j = 0; j < v2d2[i].size(); j++)
+        {
+            if (v2d2[i][j] == 1)
+            {
+                v2d2[i][j] = 9;
+            }
+            cout << v2d2[i][j] << " ";
+        }
+        cout << endl;
+    }
+
+
+    return 0;
+}
