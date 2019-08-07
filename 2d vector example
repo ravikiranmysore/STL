@@ -5,6 +5,14 @@ using namespace  std;
 int main()
 {
 
+// matrix:
+
+//    vector< vector<int>> my_matrix(3,vector<int>(4)); // this is 3(row) X 4(col) matrix
+
+//    typedef vector<int> Row;
+//    typedef vector<Row> Matrix;
+//    Matrix my_matrix(3,Row(4));
+
 
     // vector 2d
     vector< vector<int> > v{ { 4,5, 3, 10 }, // initializing 2D vector with values.
@@ -43,6 +51,15 @@ int main()
         cout << endl;
     }
 
+    //    vector<int,  vector<int>> my_matrix(3,vector<int>(4)); // this is 3(row) X 4(col) matrix
+
+    //    typedef vector<int> Row;
+    //    typedef vector<Row> Matrix;
+    //    Matrix my_matrix(3,Row(4));
+
+
+
+
     // Create a vector with 5 elements
     vector<int> v2; //(5, 1);// here -> ** change 1 to 9 = v2(NoOfRow,_digitToChange)
     v2.push_back(4);
@@ -51,14 +68,18 @@ int main()
     v2.push_back(9);
     v2.push_back(1);
 
-    // Create a vector of 3 elements.
-    vector<vector<int> > v2d2(7, v2);// here -> ** change (7 col, v2 = v2(NoOfCol,vector1)
 
+    // Create a vector of 3 elements.
+    //vector< vector<int> > v2d2(7, vector<int>(5,1));// here -> ** change (7 col, v2 = v2(NoOfCol,vector1)
+    vector< vector<int> > v2d2(7, v2);// here -> ** change (7 col, v2 = v2(NoOfCol,vector1)
     // Print out the elements
     cout << "Before Vector Update" << endl;
-    for (int i = 0; i < v2d2.size(); i++) {
+    for (int i = 0; i < v2d2.size(); i++)
+    {
         for (int j = 0; j < v2d2[i].size(); j++)
+        {
             cout << v2d2[i][j] << " ";
+        }
         cout << endl;
     }
 
@@ -79,7 +100,6 @@ int main()
         }
         cout << endl;
     }
-
 
     return 0;
 }
