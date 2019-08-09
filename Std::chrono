@@ -1,0 +1,166 @@
+/*
+  Clock : system clock, steady clock,high_resolution_clock
+   * std::chrono::system_clock: current time.
+   * std::steady_clock: goes at a uniform rate.
+   * std::chrono::high_resolution_clock: provides smallest possible tick period
+
+  time duration :
+   * std::chrono::duration<> : represents time duration.[2 hours( a number, a unit) ]
+   * duration< int, ration<1,1>> // number of minutes stored in a double
+   * duration<double,ration<60,1>> // number of minutes stored in a double
+   * nanoseconds, microseconds, milliseconds, minutes, hours
+   * system_clock::duration --- duration<T , system_clock::period>
+   *
+   * std::chrono::time_point<>: represents a point of time.(jan 01st 1970(Corordinated universal time  - UTC) Epoch of
+  clock)
+   *
+   * time_point<system_clock,milliseconds>
+   * system_clock::timepoint
+   * steady_clock::timepoint
+*/
+
+
+#include "bits/stdc++.h"
+
+using namespace std;
+
+void SimpleTime()
+{
+    int hour1, minute1, second1;
+    int hour2, minute2, second2;
+
+    int diff_hour, diff_minute, diff_second;
+    cout << "Enter time period 1" << endl;
+    cout << "Enter hours, minutes and seconds respectively: " << endl;
+    cin >> hour1 >> minute1 >> second1;
+    cout << "Enter time period 2" << endl;
+    cout << "Enter hours, minutes and seconds respectively: " << endl;
+    cin >> hour2 >> minute2 >> second2;
+
+    if(second2 > second1) {
+        minute1--;
+        second1 += 60;
+    }
+    diff_second = second1 - second2;
+
+    if(minute2 > minute1) {
+        hour1--;
+        minute1 += 60;
+    }
+    diff_minute = minute1 - minute2;
+
+    diff_hour = hour1 - hour2;
+    cout << "Time Difference is " << abs(diff_hour) << ":" << diff_minute << ":" << diff_second << endl;
+
+    unsigned eightHours = 8.0;
+    if(diff_hour >= 8.0) {
+        cout << "False" << endl;
+    } else {
+        cout << "Hours : " << abs(diff_hour) << endl;
+
+        if(diff_minute >= 0) {
+            cout << "Seconds : " << diff_second << endl;
+            if(diff_second >= 0) {
+                cout << "Minutes : " << diff_minute << endl;
+            }
+        } else {
+            cout << "False" << endl;
+        }
+    }
+}
+
+void OtherTime()
+{
+    // current date/time based on current system
+    time_t now = time(0);
+
+    // convert now to string form
+    // char* dt = ctime(&now);
+
+    // cout << "The local date and time is: " << dt << endl;
+
+    struct tm tstruct;
+    char buf[40];
+    tstruct = *localtime(&now);
+    // format: HH:mm:ss
+    strftime(buf, sizeof(buf), "%X", &tstruct);
+    cout << buf[0] << buf[1] << buf[2] << endl;
+}
+
+
+/*void BioTimer()
+{
+        std::ratio<1, 10> r; // 1/10
+    cout << r.num << "/" << r.den << endl;
+    std::ratio<2, 10> r1; // 2/10 -> 1/5
+    cout << r1.num << "/" << r1.den << endl;
+
+    chrono::microseconds mi(2700); // 2700 microseconds
+    mi.count();
+    chrono::nanoseconds na = mi; // 2700000 nanoseconds
+    na.count();
+    chrono::milliseconds mili = chrono::duration_cast<chrono::milliseconds>(mi); // 2 milliseconds
+    mi = mili + mi;                                                              // 2000+ 2700 = 4700
+    cout << mi.count() << endl;
+
+    chrono::steady_clock::time_point start = chrono::steady_clock::now();
+    cout << "I am bored"<< endl;
+    chrono::steady_clock::time_point end = chrono::steady_clock::now();
+    chrono::steady_clock::duration d = end - start;
+
+    if (d == chrono::steady_clock::duration::zero())
+        cout << "No time elapsed"<< endl;
+
+     cout <<  chrono::duration_cast<chrono::microseconds>(d).count() << endl;
+}*/
+
+struct Timer {
+    // std::chrono::time_point<std::chrono::steady_clock> start, end;
+    std::chrono::high_resolution_clock::time_point start, end;
+    std::chrono::duration<float> duration1;
+
+    Timer()
+    {
+        start = std::chrono::high_resolution_clock::now();
+    }
+
+    ~Timer()
+    {
+        end = std::chrono::high_resolution_clock::now();
+        duration1 = end - start;
+
+        float ms = duration1.count() * 1000.0f;
+        cout << "Timer took " << ms << "ms : " << endl;
+    }
+};
+
+void Function()
+{
+    Timer timer;
+    for(int i = 0; i < 100; i++) {
+        cout << "Hello .." << endl;
+    }
+}
+
+int main()
+{
+    Function();
+
+    using namespace std::chrono;
+
+    high_resolution_clock::time_point t1 = high_resolution_clock::now();
+
+    std::cout << "printing out 1000 stars...\n";
+    for(int i = 0; i < 1000; ++i)
+        std::cout << "*";
+    std::cout << std::endl;
+
+    high_resolution_clock::time_point t2 = high_resolution_clock::now();
+
+    duration<double> time_span = duration_cast<duration<double>>(t2 - t1);
+
+    std::cout << "It took me " << time_span.count() << " seconds.";
+    std::cout << std::endl;
+    
+    return 0;
+}
