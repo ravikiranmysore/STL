@@ -1,3 +1,11 @@
+  /* Vectors are object oriented containers defined in STL.
+	-> Dynamic size.
+	-> [] -> no checking, but has functions to check bounds.
+	-> vecot[index] or vecot.at(index) -> is same
+	-> push_back -> automatically allocates space.
+	-> vectr.at(0).at(0) -> also works
+   */
+
 #include<bits/stdc++.h>
 #include<iomanip>
 using namespace  std;
@@ -52,6 +60,12 @@ int main()
 
     vec_2d.push_back(v1);
     vec_2d.push_back(v2);
+    
+   cout << "**********************************************"<< endl;
+    cout << "Displaying elements of vec 2d "<< endl;
+    cout << vec_2d.at(0).at(0) << " " << vec_2d.at(0).at(1) << endl;
+    cout << vec_2d.at(1).at(0) << " " << vec_2d.at(1).at(1) << endl;
+    cout << "**********************************************\n\n"<< endl;
 
     cout << "\n Now for 2d vector without 'at': " <<endl;
     for ( int n = 0; n < v1.size(); ++n) {
