@@ -1,0 +1,58 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void PrintTime( chrono::seconds d)
+{
+    cout << " -> "<<chrono::duration_cast<chrono::hours>(d).count() << " h : " <<
+            chrono::duration_cast<chrono::minutes>(d % chrono::hours(1)).count() << " m : " <<
+            chrono::duration_cast<chrono::seconds>(d % chrono::minutes(1)).count() << " s " << endl;
+}
+
+void calcDiff(int h1, int m1, int s1, int h2, int m2, int s2){
+
+    chrono::seconds h = chrono::hours(h2-h1);
+    chrono::seconds m = chrono::minutes(m2-m1);
+    chrono::seconds s = chrono::seconds(s2-s1);
+
+    chrono::seconds d = h + m + s;
+    PrintTime(d);
+    cout << endl;
+
+    if( chrono::duration_cast<chrono::hours>(d).count() >= 8 )
+    {
+        chrono::seconds d2 = h + chrono::minutes(m2-m1 - 30)  + s;
+        cout << "after subtracting 30 minutes break :  ";
+        PrintTime(d2);
+    }
+    cout << endl;
+
+    if (chrono::duration_cast<chrono::hours>(d).count() >= 9 )
+    {
+        chrono::seconds d3 = h + chrono::minutes(m2-m1 - 45)  + s;
+        cout << "after subtracting 45 minutes break : ";
+        PrintTime(d3);
+    }
+    cout << endl;
+    if (chrono::duration_cast<chrono::hours>(d).count() >= 10 )
+    {
+        chrono::seconds d4 = h*0 + m*0  + s*0;
+        cout << "after more then 10 hours : ";
+        PrintTime(d4);
+    }
+    cout << endl;
+}
+
+int main()
+{
+    cout << "\n Enter log in time 24 hour format HH:MM:SS eg : 18 40 20" << endl;
+    int hour1, minute1 , second1;
+    int hour2, minute2, second2;
+
+    cin >> hour1 >> minute1 >> second1;
+    cout << "Enter log out time in 24 hours format HH:MM:SS or eg : 20 30 45"<<endl;
+    cin >> hour2 >> minute2 >> second2;
+    cout << endl;
+    calcDiff(hour1, minute1, second1, hour2, minute2, second2);
+
+    return 0;
+}
