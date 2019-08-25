@@ -1,0 +1,46 @@
+    map<string, int> mp;
+    string a;
+    int b;
+    int n;
+    cin >>n;
+    cin.ignore();
+    for(int i = 0; i < n ; i++)
+    {
+        cin >> a >> b;
+        mp.insert(pair<string, int>(a,b));
+    }
+    cout << endl;
+
+    while(cin >> a)
+    {
+        if(mp.find(a) != mp.end())
+        {
+            cout << mp.find(a)->first << "=" << mp.find(a)->second << endl;
+        }
+        else {
+            cout << "Not present"<<endl;
+        }
+        n--;
+        if( n == 0)
+        {
+            break;
+        }
+    }
+
+    double num;
+    string mystr;
+
+    cout << "Please enter a number: " << "\n";
+    cin >> num;
+    cout << "Your number is: " << num << "\n";
+    cin.ignore(256, '\n'); // Why do I need this line?
+    cout << "Please enter your name: \n";
+    getline (cin, mystr);
+    cout << "So your name is " << mystr << "?\n";
+    cout << "Have a nice day. \n";
+
+    cin >> num;
+    cin.ignore();
+    getline(cin, mystr);
+
+    cout << "num=" << num << ",mystr=\'" << mystr << "\'" << endl;
