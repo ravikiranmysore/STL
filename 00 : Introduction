@@ -1,0 +1,104 @@
+
+#include "iostream"
+
+using namespace std;
+
+#define MAX(a,b) ((a>b) ? a : b)
+
+template<typename T1>
+void swap_me(T1 &a1, T1 &b1)
+{
+	T1 temp = a1;
+	a1 = b1;
+	b1 = temp;
+}
+
+template<typename T>
+T min(T a, T b) {
+	return (a < b) ? a : b;
+}
+
+struct Person {
+	std::string name;
+	int age;
+	//add compare function for p3, because class object comparison
+	bool operator<(const Person& rhs) const {
+		return this->age < rhs.age;
+	}
+};
+
+template<typename T1, typename T2>
+void func(T1 a, T2 b) {
+	cout << a << " " << b << endl;
+}
+
+// since Person has to be overloaded
+std::ostream& operator<<(std::ostream& os, const Person& p) {
+	os << p.name;
+	return os;
+}
+
+
+
+#define SQUARE(a) ((a)*(a)) // Best practice
+
+int main()
+{
+  /* Containers :
+     collection of objects or primitive types(array, vector, deque, stack, set,map, etc)
+	 sequence containers : array, vectors, list, forward_list, deque
+	 associated containers : set, multi set, map, multi map
+	 container adapters : stack, queue, priority queue
+    
+	Algorithms :
+	functions are processiong sequences of elements from containers
+	(find, max, count, accumulate, sort etc)
+
+	Iterators :
+	Generate squences of elements from containers
+	(forward, reverse, by value, by reference, constant etc)
+	input iterator , output iterator, forward iterator, bidirectional iterator, random access iterator.
+
+	there are about 60 algo :
+	Non-modifying, Modifying.
+  */
+
+	cout << MAX(11, 2) << endl;
+	int result = SQUARE(5);
+	result = 5 * 5;
+	result = 100 / SQUARE(5);
+	result = 100 / 5 * 5;
+	cout << result;
+
+	cout << "-----" << endl;
+
+	int n = 11;
+	int m = 9;
+	cout << min(n, m) << endl;
+
+	cout << "-----" << endl;
+
+	Person p1{ "ABC", 15 };
+	Person p2{ "DEF", 30 };
+
+	Person p3 = min(p1, p2);
+	cout << p3.name << " is younger " << endl;
+
+	cout << "-----" << endl;
+
+	func(p1, p2); // this wont work, a is Person, there is no overload.
+
+	func<int, int>(10, 20);
+	func(2000, std::string("frank"));
+
+	cout << "-----" << endl;
+	int x = 100;
+	int y = 200;
+
+	cout << "Before : " << x << " , " << y << endl;
+	swap_me(x, y);
+	cout << "After : " << x << " , " << y << endl;
+
+
+	return 0;
+}
